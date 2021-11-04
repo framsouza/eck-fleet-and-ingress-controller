@@ -1,0 +1,31 @@
+apiVersion: agent.k8s.elastic.co/v1alpha1
+kind: Agent
+metadata:
+  name: fleet-server
+spec:
+  http:
+    service:
+      metadata:
+        annotations:
+          cloud.google.com/app-protocols: '{"https":"HTTPS"}'
+          service.alpha.kubernetes.io/app-protocols: '{"https":"HTTPS"}'
+  version: 7.15.1
+  elasticsearchRefs:
+  - name: cluster1
+  kibanaRef:
+    name: kibana-cluster1
+  mode: fleet
+  fleetServerEnabled: true
+  deployment:
+    replicas: 1
+    podTemplate:
+      spec:
+        serviceAccountName: fleet-server
+        automountServiceAccountToken: true
+        securityContext:
+          runAsUser: 0
+        containers:
+        - env:
+          - name: KIBANA_FLEET_HOST
+            value: https://kibana-cluster1-kb-http.default.svc:5601/kibana
+          name: agent

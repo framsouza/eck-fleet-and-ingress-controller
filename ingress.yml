@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+spec:
+  tls:
+  - hosts:
+      - framsouza.co
+    secretName: framsouza-cert
+  rules:
+    - host: framsouza.co
+      http:
+        paths:
+          - path: /kibana
+            pathType: Prefix
+            backend:
+              service:
+                name: kibana-cluster1-kb-http
+                port:
+                  number: 5601
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: fleet-server-agent-http
+                port:
+                  number: 8220

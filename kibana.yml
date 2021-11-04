@@ -1,0 +1,31 @@
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  name: kibana-cluster1
+spec:
+  version: 7.15.1
+  count: 1
+  elasticsearchRef:
+    name: cluster1
+  config:
+    xpack.fleet.agents.elasticsearch.host: "https://cluster1-es-http.default.svc:9200"
+    xpack.fleet.agents.fleet_server.hosts: ["https://fleet-server-agent-http.default.svc:8220"]
+    server:
+      rewriteBasePath: true
+      basePath: "/kibana"
+      publicBaseUrl: "https://framsouza.co/kibana"
+  http:
+    service:
+      metadata:
+        annotations:
+          cloud.google.com/app-protocols: '{"https":"HTTPS"}'
+          service.alpha.kubernetes.io/app-protocols: '{"https":"HTTPS"}'
+  podTemplate:
+    spec:
+      containers:
+        - name: kibana
+          readinessProbe:
+            httpGet:
+              scheme: HTTPS
+              path: "/kibana/login"
+              port: 5601
