@@ -89,7 +89,8 @@ We have some limitations to using `/fleet` to access fleet server at the moment 
 
 Once you apply the ingress, you should be able to access Kibana and see the following on the Fleet page:
 
-<img width="1316" alt="Screenshot 2021-11-03 at 16 22 42" src="https://user-images.githubusercontent.com/16880741/140306312-bc95e887-e8ad-4284-b891-498c11f67c09.png">
+<img width="1362" alt="Screenshot 2021-11-04 at 12 32 52" src="https://user-images.githubusercontent.com/16880741/140306539-35b70df6-051d-49f3-82e3-afaa62925acb.png">
+
 
 Great! It means you have Fleet Server up and running and now you are ready to enroll agents that is running out of Kubernetes using https://framsouza.com/
 For this example, I enrolled my own laptop running the following command:
