@@ -10,6 +10,7 @@ This doc will guide you to configure the following resources:
 - Kibana
 - Fleet
 - Ingress Controller 
+
 These are the resources needed to make it works, however, I am assuming you already have the ingress controller up & running and that you are also running ECK on GCP.
 
 ## Implementation
@@ -88,7 +89,7 @@ We have some limitations to using `/fleet` to access fleet server at the moment 
 
 Once you apply the ingress, you should be able to access Kibana and see the following on the Fleet page:
 
-
+<img width="1316" alt="Screenshot 2021-11-03 at 16 22 42" src="https://user-images.githubusercontent.com/16880741/140306312-bc95e887-e8ad-4284-b891-498c11f67c09.png">
 
 Great! It means you have Fleet Server up and running and now you are ready to enroll agents that is running out of Kubernetes using https://framsouza.com/
 For this example, I enrolled my own laptop running the following command:
@@ -100,7 +101,7 @@ You should be able to grab your token by clicking on "Add agent" at the Fleet pa
 
 If you access the Fleet page again, you will see you have one more agent available with metrics and logs.
 
-
+<img width="2363" alt="Screenshot 2021-11-03 at 16 46 07" src="https://user-images.githubusercontent.com/16880741/140306359-2ba50718-e494-437b-9c9d-b1fb30c2f637.png">
 
 
 If you have any question, please do not hesitate to reach out via email fram.souza14@gmail.com
