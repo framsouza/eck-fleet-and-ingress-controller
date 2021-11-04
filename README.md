@@ -5,18 +5,18 @@ Before start implementing these steps, make sure you are running ECK Operator +1
 If you are running fleet with ECK and you want to enroll agents out of Kubernetes via ingress controller, you are in the right place.
 
 This doc will guide you to configure the following resources:
-Cluster roles / Service Accounts 
-Elasticsearch
-Kibana
-Fleet
-Ingress Controller 
+- Cluster roles / Service Accounts 
+- Elasticsearch
+- Kibana
+- Fleet
+- Ingress Controller 
 These are the resources needed to make it works, however, I am assuming you already have the ingress controller up & running and that you are also running ECK on GCP.
 
 ## Implementation
 
-First things first, let's create our elasticsearch cluster by applying the (es.yml)[https://github.com/framsouza/eck-fleet-and-ingress-controller/blob/main/es.yml] manifest, if you take a look closer you will see that there's no specific setting for fleet, the only adjustment need here is the annotation which means the ingress will talk to the elasticsearch resource using https.
+First things first, let's create our elasticsearch cluster by applying the [es.yml](https://github.com/framsouza/eck-fleet-and-ingress-controller/blob/main/es.yml) manifest, if you take a look closer you will see that there's no specific setting for fleet, the only adjustment need here is the annotation which means the ingress will talk to the elasticsearch resource using https.
 
-Once elasticsearch is up and running, it's time to apply the (kibana.yml)[https://github.com/framsouza/eck-fleet-and-ingress-controller/blob/main/kibana.yml] manifest.
+Once elasticsearch is up and running, it's time to apply the [kibana.yml](https://github.com/framsouza/eck-fleet-and-ingress-controller/blob/main/kibana.yml) manifest.
 Here you have to specify the following:
 ```
  config:
@@ -47,9 +47,9 @@ Last but not least, as we changed the kibana entry point, we also need to adjust
 We are now using `/kibana` which means the healthy check must run against `/kibana/login` from now on.
 
 Once kibana is up and running and properly connected with ES, we are ready to deploy fleet.
-But before that, make sure you applied the (clusterroles.yml)[https://github.com/framsouza/eck-fleet-and-ingress-controller/blob/main/clusterroles.yml] manifest to make sure you have the proper permissions set.
+But before that, make sure you applied the [clusterroles.yml](https://github.com/framsouza/eck-fleet-and-ingress-controller/blob/main/clusterroles.yml) manifest to make sure you have the proper permissions set.
 
-If you check the (fleet.yml)[https://github.com/framsouza/eck-fleet-and-ingress-controller/blob/main/fleet.yml] manifest, you will see the same annotations as I mentioned before for ES & Kibana. The part that matter for us here is 
+If you check the [fleet.yml](https://github.com/framsouza/eck-fleet-and-ingress-controller/blob/main/fleet.yml) manifest, you will see the same annotations as I mentioned before for ES & Kibana. The part that matter for us here is 
 ```
  containers:
 	 - env:
@@ -92,8 +92,9 @@ Once you apply the ingress, you should be able to access Kibana and see the foll
 
 Great! It means you have Fleet Server up and running and now you are ready to enroll agents that is running out of Kubernetes using https://framsouza.com/
 For this example, I enrolled my own laptop running the following command:
-
+```
 sudo ./elastic-agent install -f --url=https://framsouza.co/ --enrollment-token=<TOKEN> --insecure
+```
 
 You should be able to grab your token by clicking on "Add agent" at the Fleet page.
 
